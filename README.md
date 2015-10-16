@@ -1,7 +1,8 @@
 thin
 =================
 
-This cookbook is used for installing and configuring your thin server
+This cookbook is used for installing and configuring a thin web server
+
 
 Requirements
 ------------
@@ -11,10 +12,6 @@ Requirements
 Platform
 ---------
 CentOS, Red Hat 
-
-Cookbooks
-----------
-* [ruby_build](https://github.com/fnichol/chef-ruby_build)
 
 Attributes
 ----------
@@ -28,9 +25,8 @@ Usage
 -----
 Just add the default recipe `recipe[thin::default]` to the run_list
 
-
-## Contributing ##
-
+Contributing
+---------------
 * Source hosted at [GitHub](https://github.com/nimeshsubramanian/thin)
 * Report issues/Questions/Feature requests on [GitHub Issues](https://github.com/nimeshsubramanian/thin/issues)
 
