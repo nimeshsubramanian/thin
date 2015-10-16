@@ -52,8 +52,3 @@ vendor/
 # Kitchen #
 ###########
 .kitchen/
-
-# Roll-Out
-###########
-/target
-/site
