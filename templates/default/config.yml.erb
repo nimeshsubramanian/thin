@@ -1,0 +1,6 @@
+# DO NOT make any manual changes to this file.
+# This file is maintained by CHEF.
+---
+<% node['thin']['config'].each do |conf, value| %>
+<%= conf %>: <%= value %>
+<% end %>

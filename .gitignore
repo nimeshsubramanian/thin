@@ -1,0 +1,59 @@
+# Put files/directories that should be ignored by git in this file
+# Lines that start with '# ' are comments.
+
+# OS generated files #
+######################
+.DS_Store
+Icon?
+nohup.out
+ehthumbs.db
+Thumbs.db
+
+# Testing #
+###########
+.rspec
+.coverage
+
+# EDITORS #
+###########
+\#*#
+*~
+.*.sw[a-z]
+*#
+.#*
+*.un~
+*.tmp
+*.bak
+*.bk
+*.bkup
+bin/
+.cache/
+
+# Doc #
+#############
+.yardoc/
+.yardopts
+doc/
+
+# Berkshelf #
+#############
+tmp
+
+# Bundle #
+###########
+.bundle/
+vendor/
+
+# Vagrant #
+###########
+.vagrant/
+.vagrant.d/
+
+# Kitchen #
+###########
+.kitchen/
+
+# Roll-Out
+###########
+/target
+/site
