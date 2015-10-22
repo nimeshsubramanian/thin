@@ -9,3 +9,4 @@ license           'Apache 2.0'
 supports 'redhat', '~> 6.0'
 
 depends 'ruby_build'
+depends 'runit'
