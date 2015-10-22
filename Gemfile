@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'berkshelf', '~> 4.0'
 
 group :kitchen_common do
-  gem 'test-kitchen', '~> 1.2'
+  gem 'test-kitchen', '~> 1.4'
 end
 
 group :kitchen_vagrant do

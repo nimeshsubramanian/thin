@@ -4,6 +4,10 @@ DEPENDENCIES
     metadata: true
 
 GRAPH
+  packagecloud (0.1.0)
   ruby_build (0.8.0)
+  runit (1.7.4)
+    packagecloud (>= 0.0.0)
   thin (0.1.0)
     ruby_build (>= 0.0.0)
+    runit (>= 0.0.0)
