@@ -21,11 +21,7 @@ default['thin'].tap do |thin|
   thin['config']['max_conns'] = '1024'
   thin['config']['environment'] = 'development'
   thin['config']['max_persistent_conns'] = '124'
-  thin['config']['servers'] = '1'
-  thin['config']['threaded'] = 'true'
-  thin['config']['daemonize'] = 'true'
   thin['config']['no-epoll'] = 'true'
-
   thin['gems']['install']['thin'] = { version: ['~> 1.6'] }
   thin['gems']['install']['bundler'] = { version: ['~> 1.10'] }
 end

@@ -82,10 +82,7 @@ end
 node.default['thin']['config']['chdir'] =  "#{node['thin']['base_dir']}/#{node['thin']['app_name']}"
 node.default['thin']['config']['tag'] = node['thin']['app_name']
 node.default['thin']['config']['socket'] = "#{node['thin']['run_dir']}/#{node['thin']['app_name']}.sock"
-node.default['thin']['config']['pid'] = "#{node['thin']['run_dir']}/#{node['thin']['app_name']}.pid"
 node.default['thin']['config']['log'] = "#{node['thin']['log_dir']}/#{node['thin']['log']['name']}"
-node.default['thin']['config']['user'] = node['thin']['user']
-node.default['thin']['config']['group'] = node['thin']['group']
 
 thin_config_path = "#{node['thin']['etc_dir']}/config.yml"
 
@@ -109,7 +106,6 @@ runit_service 'thin' do
     ruby_bin: "#{ruby_path}/bin",
     config_file: thin_config_path
     )
-  action [:enable]
   notifies :start, 'service[thin]'
 end
 
