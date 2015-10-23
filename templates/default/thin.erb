@@ -4,42 +4,65 @@
 # This file is maintained by CHEF.
 # Actions supported: start, stop and restart
 
-START_SCRIPT=thin start -C <%= @thin_config %>
+#START_SCRIPT="thin start -C <%= @thin_config %>"
+#STOP_SCRIPT="thin stop -C <%= @thin_config %>"
 PIDFILE=<%= @pid_file %>
-LOGFILE=<%= @log_file %>
+
+RETURN_VALUE=0
 
 start() {
-  
+  [ -f "$PIDFILE" ] && _status && return
   export BUNDLE_GEMFILE="<%= @app_dir %>/Gemfile"
   export PATH="<%= @ruby_bin %>:$PATH"
 
-  if [ -f /var/run/$PIDNAME ] && kill -0 $(cat "$PIDFILE"); then
-    echo 'Service is already running' >&2
-    RETURN_VALUE=1
-  else
-    echo 'Starting service…' >&2
-    local CMD="$START_SCRIPT &> \"$LOGFILE\" & echo \$!"
-    "$CMD" > "$PIDFILE"
-    echo 'Service started' >&2
+  thin start -C <%= @thin_config %>
+
+  if check_pid; then
     RETURN_VALUE=0
+    echo "Server has started"
+  else
+    RETURN_VALUE=1
+    echo "Bork..bork..bork...unable to start the server!"
   fi
 }
 
+check_pid() {
+  # wait for pidfile
+  sleep 2
+  [ -f "$PIDFILE" ]
+}
+
 stop() {
-  if [ -f "$PIDFILE" ] && kill -0 $(cat "$PIDFILE"); then
-    echo 'Stopping service…' >&2
-    kill -15 $(cat "$PIDFILE") && rm -f "$PIDFILE"
-    echo 'Service stopped' >&2
-    RETURN_VALUE=0
+  if [ -f "$PIDFILE" ]; then
+    echo -n $"Stopping thin server:"
+    export BUNDLE_GEMFILE="<%= @app_dir %>/Gemfile"
+    export PATH="<%= @ruby_bin %>:$PATH"
+    thin stop -C <%= @thin_config %>
+    if check_pid; then
+      RETURN_VALUE=1
+      echo "Unable to shut down the server!"
+    else
+      RETURN_VALUE=0
+      echo "Successfully shut down!"
+    fi
   else
-    echo 'Service is not running' >&2
-    RETURN_VALUE=1
+    _status
+    RETURN_VALUE=0
   fi
 }
 
 _status() {
-  status -p $PIDFILE 
-  RETURN_VALUE=$?
+  if check_pid; then
+    PID=`cat $PIDFILE`
+    if  ps -p $PID >&- ; then
+      echo "Thin server is up!"
+    else
+      echo "Thin server is not up!"
+    fi
+  else
+    RETURN_VALUE=1
+    echo "Thin server is not up!"
+  fi
 }
 
 case "$1" in
@@ -57,7 +80,9 @@ case "$1" in
     start
     ;;
   *)
-    echo "Usage: $0 {start|stop|restart|uninstall}"
+    echo "Usage: $0 {start|stop|restart}"
+    RETURN_VALUE=2
+    ;;
 esac
 
-exit RETURN_VALUE
+exit $RETURN_VALUE

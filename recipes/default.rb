@@ -48,6 +48,8 @@ raise error unless error.empty?
 unless node['thin']['local_development']
   # Fetching source
   git 'Fetching the App' do
+    user node['thin']['user']
+    group node['thin']['group']
     repository node['thin']['git']['repository']
     if node['thin']['environment'] == 'development'
       checkout_branch node['thin']['git']['branch']
@@ -63,7 +65,6 @@ end
 
 # Installing App gem dependencies
 execute 'App dependencies' do
-  user node['thin']['user']
   group node['thin']['group']
   cwd "#{node['thin']['base_dir']}/#{node['thin']['app_name']}"
   if node['thin']['app']['gem']['ignore_group'].empty?
@@ -107,8 +108,7 @@ template 'Thin init.d script' do
   mode '755'
   variables ({
     app_dir: node['thin']['config']['chdir'],
-    log_file: node['thin']['config']['log'],
-    pid_file: node['thin']['config']['pid'],
+    pid_file: node['thin']['config']['pid'].gsub('.pid', ".0.pid"),
     thin_config: thin_config_path,
     ruby_bin: "#{ruby_path}/bin" })
   action :create
