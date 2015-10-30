@@ -94,8 +94,8 @@ thin_config_path = "#{node['thin']['etc_dir']}/config.yml"
 template 'Thin config' do 
   source 'config.yml.erb'
   path thin_config_path
-  owner node['thin']['config']['user']
-  group node['thin']['config']['group']
+  owner node['thin']['user']
+  group node['thin']['group']
   mode '750'
   action :create
   notifies :restart, 'service[thin]'
