@@ -82,7 +82,7 @@ end
 # Generating sane values for the config.yml for thin
 node.default['thin']['config']['chdir'] =  "#{node['thin']['base_dir']}/#{node['thin']['app_name']}"
 node.default['thin']['config']['tag'] = node['thin']['app_name']
-node.default['thin']['config']['socket'] = "#{node['thin']['run_dir']}/#{node['thin']['app_name']}.sock"
+#node.default['thin']['config']['socket'] = "#{node['thin']['run_dir']}/#{node['thin']['app_name']}.sock"
 node.default['thin']['config']['pid'] = "#{node['thin']['run_dir']}/#{node['thin']['app_name']}.pid"
 node.default['thin']['config']['log'] = "#{node['thin']['log_dir']}/#{node['thin']['log']['name']}"
 node.default['thin']['config']['user'] = node['thin']['user']
