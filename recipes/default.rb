@@ -108,7 +108,7 @@ template 'Thin init.d script' do
   mode '755'
   variables ({
     app_dir: node['thin']['config']['chdir'],
-    pid_file: node['thin']['config']['pid'].gsub('.pid', ".0.pid"),
+    pid_file: node['thin']['config']['pid'].gsub('.pid', ".#{node['thin']['config']['port']}.pid"),
     thin_config: thin_config_path,
     ruby_bin: "#{ruby_path}/bin" })
   action :create
