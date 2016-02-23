@@ -68,9 +68,9 @@ execute 'App dependencies' do
   group node['thin']['group']
   cwd "#{node['thin']['base_dir']}/#{node['thin']['app_name']}"
   if node['thin']['app']['gem']['ignore_group'].empty?
-    command "#{ruby_path}/bin/bundle install"
+    command "#{ruby_path}/bin/bundle install --full-index"
   else
-    command "#{ruby_path}/bin/bundle install --without #{node['thin']['app']['gem']['ignore_group']}"
+    command "#{ruby_path}/bin/bundle install --without #{node['thin']['app']['gem']['ignore_group']} --full-index"
   end
   unless node['thin']['local_development']
     action :nothing
